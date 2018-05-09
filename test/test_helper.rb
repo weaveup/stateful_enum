@@ -5,7 +5,14 @@ ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("../../test/dummy/config/environment.rb", __FILE__)
 ActiveRecord::Migration.verbose = false
-ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths = [File.expand_path("../../test/dummy/db/migrate", __FILE__)])
+if ActiveRecord::Migrator.respond_to? :migrate
+  ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths = [File.expand_path("../../test/dummy/db/migrate", __FILE__)])
+else
+  ActiveRecord::Migrator.migrations_paths << File.expand_path('../dummy/db/migrate', __FILE__)
+  ActiveRecord::Tasks::DatabaseTasks.drop_current 'test'
+  ActiveRecord::Tasks::DatabaseTasks.create_current 'test'
+  ActiveRecord::Tasks::DatabaseTasks.migrate
+end
 
 require 'test/unit/rails/test_help'
 
