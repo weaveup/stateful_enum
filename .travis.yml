@@ -5,6 +5,8 @@ sudo: false
 cache:
   - apt
   - bundler
+before_install:
+  - gem install bundler
 
 rvm:
   - 2.2.7
