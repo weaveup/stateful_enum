@@ -7,7 +7,7 @@ module StatefulEnum
     class GraphGenerator < ::Rails::Generators::NamedBase
       desc 'Draws a state machine diagram as a PNG file'
       def draw
-        require 'graphviz'
+        require 'ruby-graphviz'
         StatefulEnum::Machine.prepend StatefulEnum::Graph
         class_name.constantize
       end
