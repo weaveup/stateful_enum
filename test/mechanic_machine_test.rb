@@ -53,9 +53,27 @@ class StatefulEnumTest < ActiveSupport::TestCase
 
   def test_can_xxxx?
     bug = Bug.new
+    assert bug.can_resolve?
+    bug.resolve!
+    refute bug.can_resolve?
+  end
+
+  def test_if_condition_can_xxxx?
+    bug = Bug.new
+    refute bug.can_assign?
+    bug.assigned_to = User.new
     assert bug.can_assign?
     bug.resolve!
     refute bug.can_assign?
+  end
+
+  def test_unless_condition_can_xxxx?
+    bug = Bug.new
+    refute bug.can_assign_with_unless?
+    bug.assigned_to = User.new
+    assert bug.can_assign_with_unless?
+    bug.resolve!
+    refute bug.can_assign_with_unless?
   end
 
   def test_xxxx_transition
