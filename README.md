@@ -105,6 +105,7 @@ There are a few important details to note regarding this feature:
 * The "from" states and the "to" states should both be given in Symbols.
 * The "from" state can be multiple states, in which case the key can be given as an Array of states, as shown in the usage example.
 * The "from" state can be `all` that means all defined states.
+* The "from" state can be an exception of Array of states, in this case the key can be a subtraction of `all` with the state to be excluded, as shown in the usage example.
 
 ### :if and :unless Condition
 
