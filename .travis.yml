@@ -9,10 +9,10 @@ before_install:
   - gem install bundler
 
 rvm:
-  - 2.2.7
-  - 2.3.4
-  - 2.4.1
-  - 2.5.1
+  - 2.2.10
+  - 2.3.8
+  - 2.4.5
+  - 2.5.3
   - ruby-head
 
 gemfile:
@@ -29,11 +29,11 @@ addons:
 
 matrix:
   exclude:
-    - rvm: 2.4.1
+    - rvm: 2.4.5
       gemfile: gemfiles/Gemfile-rails.4.1.x
-    - rvm: 2.4.1
+    - rvm: 2.4.5
       gemfile: gemfiles/Gemfile-rails.4.2.x
-    - rvm: 2.5.1
+    - rvm: 2.5.3
       gemfile: gemfiles/Gemfile-rails.4.1.x
     - rvm: ruby-head
       gemfile: gemfiles/Gemfile-rails.4.1.x
