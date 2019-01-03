@@ -8,16 +8,6 @@ cache:
 before_install:
   - gem i bundler -v '<2'
 
-rvm:
-  - 2.6.0
-
-gemfile:
-  - gemfiles/Gemfile-rails.5.2.x
-  - gemfiles/Gemfile-rails.5.1.x
-  - gemfiles/Gemfile-rails.5.0.x
-  - gemfiles/Gemfile-rails.4.2.x
-  - gemfiles/Gemfile-rails.4.1.x
-
 addons:
   apt:
     packages:
@@ -25,6 +15,13 @@ addons:
 
 matrix:
   include:
+    - rvm: 2.6.0
+      gemfile: gemfiles/Gemfile-rails.5.2.x
+    - rvm: 2.6.0
+      gemfile: gemfiles/Gemfile-rails.5.1.x
+    - rvm: 2.6.0
+      gemfile: gemfiles/Gemfile-rails.5.0.x
+
     - rvm: 2.5.3
       gemfile: gemfiles/Gemfile-rails.4.2.x
     - rvm: 2.5.3
@@ -39,13 +36,6 @@ matrix:
 
     - rvm: ruby-head
       gemfile: gemfiles/Gemfile-rails.5.2.x
-
-  exclude:
-    - rvm: 2.6.0
-      gemfile: gemfiles/Gemfile-rails.4.2.x
-    - rvm: 2.6.0
-      gemfile: gemfiles/Gemfile-rails.4.1.x
-
 
   allow_failures:
     - rvm: ruby-head
