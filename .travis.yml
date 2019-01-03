@@ -24,11 +24,10 @@ matrix:
 
     - rvm: 2.5.3
       gemfile: gemfiles/Gemfile-rails.4.2.x
-    - rvm: 2.5.3
-      gemfile: gemfiles/Gemfile-rails.4.1.x
 
     - rvm: 2.4.5
-      gemfile: gemfiles/Gemfile-rails.5.2.x
+      gemfile: gemfiles/Gemfile-rails.4.1.x
+
     - rvm: 2.3.8
       gemfile: gemfiles/Gemfile-rails.5.2.x
     - rvm: 2.2.10
