@@ -145,7 +145,7 @@ You can specify relative or absolute output path via environment variable `DEST_
 
 ## Support Rails Versions
 
-* Rails 4.1.x, 4.2.x, 5.0, 5.1, and 5.2 (edge)
+* Rails 4.1.x, 4.2.x, 5.0, 5.1, 5.2, and 6.0 (edge)
 
 
 ## Contributing

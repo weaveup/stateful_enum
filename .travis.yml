@@ -36,5 +36,9 @@ matrix:
     - rvm: ruby-head
       gemfile: gemfiles/Gemfile-rails.5.2.x
 
+    - rvm: 2.6.0
+      gemfile: gemfiles/Gemfile-rails.edge
+
   allow_failures:
     - rvm: ruby-head
+    - gemfile: gemfiles/Gemfile-rails.edge
