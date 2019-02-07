@@ -1,16 +1,14 @@
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'stateful_enum', path: '..'
+gemspec path: '..'
 
 github 'rails/rails' do
   gem 'rails'
 end
 gem 'sqlite3'
-gem 'test-unit-rails'
 gem 'selenium-webdriver'
-gem 'ruby-graphviz'
