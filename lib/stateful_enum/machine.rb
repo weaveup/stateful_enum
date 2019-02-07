@@ -3,7 +3,7 @@
 module StatefulEnum
   class Machine
     def initialize(model, column, states, prefix, suffix, &block)
-      @model, @column, @states, @event_names = model, column, states, []
+      @model, @column, @states, @events = model, column, states, []
       @prefix = if prefix
         prefix == true ? "#{column}_" : "#{prefix}_"
       end
@@ -20,12 +20,13 @@ module StatefulEnum
     end
 
     def event(name, &block)
-      raise ArgumentError, "event: :#{name} has already been defined." if @event_names.include? name
-      Event.new @model, @column, @states, @prefix, @suffix, name, &block
-      @event_names << name
+      raise ArgumentError, "event: :#{name} has already been defined." if @events.map(&:name).include? name
+      @events << Event.new(@model, @column, @states, @prefix, @suffix, name, &block)
     end
 
     class Event
+      attr_reader :name
+
       def initialize(model, column, states, prefix, suffix, name, &block)
         @states, @name, @transitions, @before, @after = states, name, {}, [], []
 
