@@ -33,28 +33,28 @@ module StatefulEnum
         instance_eval(&block) if block
 
         transitions, before, after = @transitions, @before, @after
-        new_method_name = "#{prefix}#{name}#{suffix}"
+        value_method_name = "#{prefix}#{name}#{suffix}"
 
         # defining event methods
         model.class_eval do
           # def assign()
-          detect_enum_conflict! column, new_method_name
+          detect_enum_conflict! column, value_method_name
 
           # defining callbacks
-          define_callbacks new_method_name
+          define_callbacks value_method_name
           before.each do |before_callback|
-            model.set_callback new_method_name, :before, before_callback
+            model.set_callback value_method_name, :before, before_callback
           end
           after.each do |after_callback|
-            model.set_callback new_method_name, :after, after_callback
+            model.set_callback value_method_name, :after, after_callback
           end
 
-          define_method new_method_name do
+          define_method value_method_name do
             to, condition = transitions[send(column).to_sym]
             #TODO better error
             if to && (!condition || instance_exec(&condition))
               #TODO transaction?
-              run_callbacks new_method_name do
+              run_callbacks value_method_name do
                 original_method = self.class.send(:_enum_methods_module).instance_method "#{prefix}#{to}#{suffix}!"
                 original_method.bind(self).call
               end
@@ -64,14 +64,14 @@ module StatefulEnum
           end
 
           # def assign!()
-          detect_enum_conflict! column, "#{new_method_name}!"
-          define_method "#{new_method_name}!" do
-            send(new_method_name) || raise('Invalid transition')
+          detect_enum_conflict! column, "#{value_method_name}!"
+          define_method "#{value_method_name}!" do
+            send(value_method_name) || raise('Invalid transition')
           end
 
           # def can_assign?()
-          detect_enum_conflict! column, "can_#{new_method_name}?"
-          define_method "can_#{new_method_name}?" do
+          detect_enum_conflict! column, "can_#{value_method_name}?"
+          define_method "can_#{value_method_name}?" do
             state = send(column).to_sym
             return false unless transitions.key? state
             _to, condition = transitions[state]
@@ -79,8 +79,8 @@ module StatefulEnum
           end
 
           # def assign_transition()
-          detect_enum_conflict! column, "#{new_method_name}_transition"
-          define_method "#{new_method_name}_transition" do
+          detect_enum_conflict! column, "#{value_method_name}_transition"
+          define_method "#{value_method_name}_transition" do
             transitions[send(column).to_sym].try! :first
           end
         end
