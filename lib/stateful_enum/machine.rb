@@ -33,7 +33,7 @@ module StatefulEnum
         instance_eval(&block) if block
 
         transitions, before, after = @transitions, @before, @after
-        value_method_name = "#{prefix}#{name}#{suffix}"
+        @value_method_name = value_method_name = "#{prefix}#{name}#{suffix}"
 
         # defining event methods
         model.class_eval do
