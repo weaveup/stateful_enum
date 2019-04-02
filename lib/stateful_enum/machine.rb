@@ -2,6 +2,8 @@
 
 module StatefulEnum
   class Machine
+    attr_reader :events
+
     def initialize(model, column, states, prefix, suffix, &block)
       @model, @column, @states, @events = model, column, states, []
       @prefix = if prefix
@@ -25,7 +27,7 @@ module StatefulEnum
     end
 
     class Event
-      attr_reader :name
+      attr_reader :name, :value_method_name
 
       def initialize(model, column, states, prefix, suffix, name, &block)
         @states, @name, @transitions, @before, @after = states, name, {}, [], []
