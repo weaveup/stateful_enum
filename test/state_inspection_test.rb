@@ -12,4 +12,9 @@ class StateInspectionTest < ActiveSupport::TestCase
     unassigned_bug = Bug.new status: :assigned, assigned_to: User.create!(name: 'matz')
     assert_equal %w[resolve close], unassigned_bug.stateful_enum.possible_event_names
   end
+
+  def test_possible_states
+    unassigned_bug = Bug.new status: :assigned, assigned_to: User.create!(name: 'matz')
+    assert_equal %i[resolved closed], unassigned_bug.stateful_enum.possible_states
+  end
 end
