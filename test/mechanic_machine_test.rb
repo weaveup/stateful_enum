@@ -193,11 +193,6 @@ class StatefulEnumTest < ActiveSupport::TestCase
     end
   end
 
-  def test_possible_events
-    unassigned_bug = Bug.new status: :assigned, assigned_to: User.create!(name: 'matz')
-    assert_equal %w[resolve close], unassigned_bug.stateful_enum.possible_events.map(&:value_method_name)
-  end
-
   if Rails::VERSION::STRING >= '5'
     def test_enum_definition_with_prefix
       ActiveRecord::Migration.create_table(:enum_prefix_test) do |t|
