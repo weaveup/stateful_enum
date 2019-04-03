@@ -6,7 +6,7 @@ module StatefulEnum
   module StateInspection
     extend ActiveSupport::Concern
 
-    module ClassMethod
+    module ClassMethods
       def stateful_enum
         @_stateful_enum
       end
