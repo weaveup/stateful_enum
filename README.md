@@ -122,6 +122,38 @@ end
 
 You can define `before` and `after` event hooks inside of an `event` block.
 
+### Inspecting All Defined Events And Current Possible Events
+
+You can get the list of defined events from the model class:
+
+```ruby
+Bug.stateful_enum.events
+#=> an Array of all defined StatefulEnum::Machine::Event objects
+```
+
+And you can get the list of possible event definitions from the model instance:
+
+```ruby
+Bug.new(status: :assigned).stateful_enum.possible_events
+#=> an Array of StatefulEnum::Machine::Event objects that are callable from the receiver object
+```
+
+Maybe what you really need for your app is the list of possible event "names":
+
+```ruby
+Bug.new(status: :assigned).stateful_enum.possible_event_names
+#=> [:resolve, :close]
+```
+
+You can get the list of next possible state names as well:
+
+```ruby
+Bug.new(status: :assigned).stateful_enum.possible_states
+#=> [:resolved, :closed]
+```
+
+These features would help some kind of metaprogramming over state transitions.
+
 
 ## Generating State Machine Diagrams
 
