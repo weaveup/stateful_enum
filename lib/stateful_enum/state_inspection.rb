@@ -26,5 +26,10 @@ module StatefulEnum
     def possible_events
       @stateful_enum.events.select {|e| @model_instance.send("can_#{e.value_method_name}?") }
     end
+
+    # List of possible event names from the current state
+    def possible_event_names
+      possible_events.map(&:value_method_name)
+    end
   end
 end
