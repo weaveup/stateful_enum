@@ -4,6 +4,8 @@ class CreateUsers < (Rails::VERSION::STRING >= '5' ? ActiveRecord::Migration[5.0
   def change
     create_table :users do |t|
       t.string :name
+      t.integer :account_status
+      t.integer :player_status
 
       t.timestamps null: false
     end

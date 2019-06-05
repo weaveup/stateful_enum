@@ -17,4 +17,19 @@ class StateInspectionTest < ActiveSupport::TestCase
     unassigned_bug = Bug.new status: :assigned, assigned_to: User.create!(name: 'matz')
     assert_equal %i[resolved closed], unassigned_bug.stateful_enum.possible_states
   end
+
+  def test_possible_events_on_models_that_have_multiple_enums
+    user = User.new account_status: :active, player_status: :normal
+    assert_equal %i[withdraw die], user.stateful_enum.possible_events.map(&:value_method_name)
+  end
+
+  def test_possible_event_names_on_models_that_have_multiple_enums
+    user = User.new account_status: :active, player_status: :normal
+    assert_equal %i[withdraw die], user.stateful_enum.possible_event_names
+  end
+
+  def test_possible_states_on_models_that_have_multiple_enums
+    user = User.new account_status: :active, player_status: :normal
+    assert_equal %i[withdrawn dead], user.stateful_enum.possible_states
+  end
 end

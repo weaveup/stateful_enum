@@ -8,7 +8,7 @@ module StatefulEnum
 
     module ClassMethods
       def stateful_enum
-        @_stateful_enum
+        @_defined_stateful_enums
       end
     end
 
@@ -18,13 +18,13 @@ module StatefulEnum
   end
 
   class StateInspector
-    def initialize(stateful_enum, model_instance)
-      @stateful_enum, @model_instance = stateful_enum, model_instance
+    def initialize(defined_stateful_enums, model_instance)
+      @defined_stateful_enums, @model_instance = defined_stateful_enums, model_instance
     end
 
     # List of possible events from the current state
     def possible_events
-      @stateful_enum.events.select {|e| @model_instance.send("can_#{e.value_method_name}?") }
+      @defined_stateful_enums.flat_map {|se| se.events.select {|e| @model_instance.send("can_#{e.value_method_name}?") } }
     end
 
     # List of possible event names from the current state
@@ -34,8 +34,11 @@ module StatefulEnum
 
     # List of transitionable states from the current state
     def possible_states
-      col = @stateful_enum.instance_variable_get :@column
-      possible_events.flat_map {|e| e.instance_variable_get(:@transitions)[@model_instance.send(col).to_sym].first }
+      @defined_stateful_enums.flat_map do |stateful_enum|
+        col = stateful_enum.instance_variable_get :@column
+        pe = stateful_enum.events.select {|e| @model_instance.send("can_#{e.value_method_name}?") }
+        pe.flat_map {|e| e.instance_variable_get(:@transitions)[@model_instance.send(col).to_sym].first }
+      end
     end
   end
 end

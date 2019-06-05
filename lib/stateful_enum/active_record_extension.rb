@@ -16,7 +16,7 @@ module StatefulEnum
       if block
         definitions.each_key do |column|
           states = enum[column]
-          @_stateful_enum = StatefulEnum::Machine.new self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block
+          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
         end
       end
     end
