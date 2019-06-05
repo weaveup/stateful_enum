@@ -16,6 +16,9 @@ addons:
 matrix:
   include:
     - rvm: 2.6.0
+      gemfile: gemfiles/Gemfile-rails.6.0.x
+
+    - rvm: 2.6.0
       gemfile: gemfiles/Gemfile-rails.5.2.x
     - rvm: 2.6.0
       gemfile: gemfiles/Gemfile-rails.5.1.x
