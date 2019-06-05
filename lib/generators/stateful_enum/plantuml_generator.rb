@@ -65,7 +65,6 @@ module StatefulEnum
       end
     end
 
-    class Item < Struct.new(:from, :to, :label)
-    end
+    Item = Struct.new(:from, :to, :label)
   end
 end
