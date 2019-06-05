@@ -4,8 +4,9 @@
 ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("../../test/dummy/config/environment.rb", __FILE__)
+
 ActiveRecord::Migration.verbose = false
-ENV['VERBOSE'] = 'false'
+verbosity, ENV['VERBOSE'] = ENV['VERBOSE'], 'false'
 if ActiveRecord::Migrator.respond_to? :migrate
   ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths = [File.expand_path("../../test/dummy/db/migrate", __FILE__)])
 else
@@ -14,7 +15,7 @@ else
   ActiveRecord::Tasks::DatabaseTasks.create_current 'test'
   ActiveRecord::Tasks::DatabaseTasks.migrate
 end
-ENV['VERBOSE'] = nil
+ENV['VERBOSE'] = verbosity
 
 require 'test/unit/rails/test_help'
 
