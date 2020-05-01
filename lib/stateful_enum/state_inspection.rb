@@ -37,7 +37,7 @@ module StatefulEnum
       @defined_stateful_enums.flat_map do |stateful_enum|
         col = stateful_enum.instance_variable_get :@column
         pe = stateful_enum.events.select {|e| @model_instance.send("can_#{e.value_method_name}?") }
-        pe.flat_map {|e| e.instance_variable_get(:@transitions)[@model_instance.send(col).to_sym].first }
+        pe.flat_map {|e| e.transitions[@model_instance.send(col).to_sym].first }
       end
     end
   end

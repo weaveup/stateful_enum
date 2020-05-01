@@ -27,7 +27,7 @@ module StatefulEnum
     end
 
     class Event
-      attr_reader :name, :value_method_name
+      attr_reader :name, :value_method_name, :transitions
 
       def initialize(model, column, states, prefix, suffix, name, &block)
         @states, @name, @transitions, @before, @after = states, name, {}, [], []
