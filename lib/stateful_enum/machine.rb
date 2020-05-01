@@ -54,7 +54,7 @@ module StatefulEnum
           define_method value_method_name do
             to, condition = transitions[send(column).to_sym]
             #TODO better error
-            if to && (!condition || instance_exec(&condition))
+            if to && (condition.nil? || instance_exec(&condition))
               #TODO transaction?
               run_callbacks value_method_name do
                 original_method = self.class.send(:_enum_methods_module).instance_method "#{prefix}#{to}#{suffix}!"
@@ -77,7 +77,7 @@ module StatefulEnum
             state = send(column).to_sym
             return false unless transitions.key? state
             _to, condition = transitions[state]
-            !condition || instance_exec(&condition)
+            condition.nil? || instance_exec(&condition)
           end
 
           # def assign_transition()
