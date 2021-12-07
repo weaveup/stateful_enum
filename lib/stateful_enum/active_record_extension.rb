@@ -9,14 +9,25 @@ module StatefulEnum
     #       transition :unassigned => :assigned
     #     end
     #   end
-    def enum(definitions, &block)
-      prefix, suffix = definitions[:_prefix], definitions[:_suffix] if Rails::VERSION::MAJOR >= 5
-      enum = super definitions
+    if Rails::VERSION::MAJOR >= 7
+      def enum(name = nil, values = nil, **options, &block)
+        definitions = super
+        return definitions unless block
 
-      if block
-        definitions.each_key do |column|
-          states = enum[column]
-          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
+        definitions.each do |name, values|
+          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, name, keys = (values.is_a?(Hash) ? values.keys : values), options[:prefix], options[:suffix], &block)
+        end
+      end
+    else
+      def enum(definitions, &block)
+        prefix, suffix = definitions[:_prefix], definitions[:_suffix] if Rails::VERSION::MAJOR >= 5
+        enum = super definitions
+
+        if block
+          definitions.each_key do |column|
+            states = enum[column]
+            (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
+          end
         end
       end
     end
