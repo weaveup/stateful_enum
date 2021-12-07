@@ -22,12 +22,11 @@ module StatefulEnum
       def enum(definitions, &block)
         prefix, suffix = definitions[:_prefix], definitions[:_suffix] if Rails::VERSION::MAJOR >= 5
         enum = super definitions
+        return enum unless block
 
-        if block
-          definitions.each_key do |column|
-            states = enum[column]
-            (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
-          end
+        enum.each_key do |column|
+          states = enum[column]
+          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
         end
       end
     end
