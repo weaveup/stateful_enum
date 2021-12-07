@@ -24,8 +24,7 @@ module StatefulEnum
         enum = super definitions
         return enum unless block
 
-        enum.each_key do |column|
-          states = enum[column]
+        enum.each_pair do |column, states|
           (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
         end
       end
