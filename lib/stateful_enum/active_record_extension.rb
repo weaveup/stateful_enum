@@ -25,10 +25,10 @@ module StatefulEnum
     else
       def enum(definitions, &block)
         prefix, suffix = definitions[:_prefix], definitions[:_suffix] if Rails::VERSION::MAJOR >= 5
-        enum = super definitions
-        return enum unless block
+        enum_values = super definitions
+        return enum_values unless block
 
-        enum.each_pair do |column, states|
+        enum_values.each_pair do |column, states|
           (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
         end
       end
