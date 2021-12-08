@@ -15,7 +15,7 @@ module StatefulEnum
         return definitions unless block
 
         definitions.each do |name, values|
-          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, name, keys = (values.is_a?(Hash) ? values.keys : values), options[:prefix], options[:suffix], &block)
+          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, name, (values.is_a?(Hash) ? values.keys : values), options[:prefix], options[:suffix], &block)
         end
       end
     else
