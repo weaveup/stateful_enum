@@ -14,8 +14,12 @@ module StatefulEnum
         definitions = super
         return definitions unless block
 
-        definitions.each do |name, values|
-          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, name, (values.is_a?(Hash) ? values.keys : values), options[:prefix], options[:suffix], &block)
+        if name
+          (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, name, (definitions.is_a?(Hash) ? definitions.keys : definitions), options[:prefix], options[:suffix], &block)
+        else
+          definitions.each do |column, states|
+            (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), options[:_prefix], options[:_suffix], &block)
+          end
         end
       end
     else
