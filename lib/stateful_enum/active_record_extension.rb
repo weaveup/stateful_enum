@@ -11,8 +11,9 @@ module StatefulEnum
     #   end
     if Rails::VERSION::MAJOR >= 7
       def enum(name = nil, values = nil, **options, &block)
+        return super unless block
+
         definitions = super name, values, **options
-        return definitions unless block
 
         if name
           (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, name, (definitions.is_a?(Hash) ? definitions.keys : definitions), options[:prefix], options[:suffix], &block)
@@ -26,9 +27,10 @@ module StatefulEnum
       end
     else
       def enum(definitions, &block)
+        return super unless block
+
         prefix, suffix = definitions[:_prefix], definitions[:_suffix] if Rails::VERSION::MAJOR >= 5
         enum_values = super definitions
-        return enum_values unless block
 
         enum_values.each_pair do |column, states|
           (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), prefix, suffix, &block)
