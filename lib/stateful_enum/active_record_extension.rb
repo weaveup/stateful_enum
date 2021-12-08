@@ -29,6 +29,7 @@ module StatefulEnum
       def enum(definitions, &block)
         return super unless block
 
+        # Preserving prefix and suffix values before calling super because the super destroys the given Hash
         prefix, suffix = definitions[:_prefix], definitions[:_suffix] if Rails::VERSION::MAJOR >= 5
         enum_values = super definitions
 
