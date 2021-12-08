@@ -11,7 +11,7 @@ module StatefulEnum
     #   end
     if Rails::VERSION::MAJOR >= 7
       def enum(name = nil, values = nil, **options, &block)
-        definitions = super
+        definitions = super name, values, **options
         return definitions unless block
 
         if name
