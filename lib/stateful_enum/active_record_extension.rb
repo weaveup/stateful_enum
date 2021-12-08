@@ -21,6 +21,8 @@ module StatefulEnum
             (@_defined_stateful_enums ||= []) << StatefulEnum::Machine.new(self, column, (states.is_a?(Hash) ? states.keys : states), options[:_prefix], options[:_suffix], &block)
           end
         end
+
+        definitions
       end
     else
       def enum(definitions, &block)
