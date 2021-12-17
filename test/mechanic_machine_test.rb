@@ -193,7 +193,7 @@ class StatefulEnumTest < ActiveSupport::TestCase
     end
   end
 
-  if Rails::VERSION::STRING >= '5'
+  if Rails::VERSION::MAJOR >= 5
     def test_enum_definition_with_prefix
       ActiveRecord::Migration.create_table(:enum_prefix_test) do |t|
         t.integer :status
