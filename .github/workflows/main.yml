@@ -15,8 +15,13 @@ jobs:
             allow_failures: 'true'
 
           - ruby_version: ruby-head
-            gemfile: gemfiles/Gemfile-rails.6.1.x
+            gemfile: gemfiles/Gemfile-rails.7.0.x
             allow_failures: 'true'
+
+          - ruby_version: '3.0'
+            gemfile: gemfiles/Gemfile-rails.7.0.x
+          - ruby_version: '2.7'
+            gemfile: gemfiles/Gemfile-rails.7.0.x
 
           - ruby_version: '3.0'
             gemfile: gemfiles/Gemfile-rails.6.1.x
