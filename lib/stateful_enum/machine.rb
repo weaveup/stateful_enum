@@ -5,7 +5,7 @@ module StatefulEnum
     attr_reader :events
 
     def initialize(model, column, states, prefix, suffix, &block)
-      @model, @column, @states, @events = model, column, states, []
+      @model, @column, @states, @events = model, column, states.map(&:to_sym), []
       @prefix = if prefix
         prefix == true ? "#{column}_" : "#{prefix}_"
       end
