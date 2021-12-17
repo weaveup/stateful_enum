@@ -26,5 +26,6 @@ module Dummy
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true if Rails::VERSION::STRING =~ /^4.2/
     config.active_record.sqlite3.represent_boolean_as_integer = true if config.active_record.sqlite3.respond_to?(:represent_boolean_as_integer) && (Rails::VERSION::MAJOR < 6)
+    config.active_record.belongs_to_required_by_default = false if Rails::VERSION::MAJOR >= 5
   end
 end
