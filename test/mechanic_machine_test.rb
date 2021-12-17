@@ -252,4 +252,16 @@ class StatefulEnumTest < ActiveSupport::TestCase
       assert_equal 'archived', tes.status
     end
   end
+
+  if Rails::VERSION::MAJOR >= 7
+    def test_rails7_new_syntax
+      ActiveRecord::Migration.create_table(:rails7) { |t| t.integer :status }
+      tes = Class.new(ActiveRecord::Base) do
+        self.table_name = 'rails7'
+        enum(:status, [:active, :archived], prefix: 'prefix', suffix: 'suffix') { event(:archive) { transition(active: :archived) } }
+      end.new status: :active
+      tes.prefix_archive_suffix
+      assert_equal 'archived', tes.status
+    end
+  end
 end
