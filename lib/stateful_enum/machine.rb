@@ -57,7 +57,9 @@ module StatefulEnum
             if to && (condition.nil? || instance_exec(&condition))
               #TODO transaction?
               run_callbacks value_method_name do
-                original_method = self.class.send(:_enum_methods_module).instance_method "#{prefix}#{to}#{suffix}!"
+                original_method = (self.class.base_class.abstract_class? ? self.class : self.class.base_class)
+                  .send(:_enum_methods_module).instance_method "#{prefix}#{to}#{suffix}!"
+
                 original_method.bind(self).call
               end
             else
